@@ -1,0 +1,17 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "globals": {},
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
+  "extends": "airbnb-base",
+  "rules": {
+    "brace-style": ["error", "stroustrup"],
+    "comma-dangle": "off",
+    "no-prototype-builtins": "off"
+  }
+}
