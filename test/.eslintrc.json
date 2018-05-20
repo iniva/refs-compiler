@@ -1,0 +1,19 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "globals": {},
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
+  "extends": [
+    "airbnb-base",
+    "../.eslintrc.json"
+  ],
+  "rules": {
+    "no-console": "off",
+    "object-curly-newline": "off"
+  }
+}
