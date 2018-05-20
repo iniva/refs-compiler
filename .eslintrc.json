@@ -12,6 +12,7 @@
   "rules": {
     "brace-style": ["error", "stroustrup"],
     "comma-dangle": "off",
+    "no-multi-assign": "off",
     "no-prototype-builtins": "off"
   }
 }
