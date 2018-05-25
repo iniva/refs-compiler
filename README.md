@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/iniva/refs-compiler/badge.svg?branch=master)](https://coveralls.io/github/iniva/refs-compiler?branch=master)
 
 # refs-compiler
 
