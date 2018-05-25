@@ -1,4 +1,5 @@
 [![Coverage Status](https://coveralls.io/repos/github/iniva/refs-compiler/badge.svg?branch=master)](https://coveralls.io/github/iniva/refs-compiler?branch=master)
+[![Build Status](https://travis-ci.org/iniva/refs-compiler.svg?branch=master)](https://travis-ci.org/iniva/refs-compiler)
 
 # refs-compiler
 
