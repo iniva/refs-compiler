@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "lts/*"
+sudo: false
+before_install:
+  - npm install -g npm
+cache:
+  directories:
+    - "node_modules"
+install:
+  - yarn install
+script:
+  - yarn test
+  - yarn coveralls
