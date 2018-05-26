@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/iniva/refs-compiler.git"
   },
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "keywords": [
     "json",
     "yaml",
