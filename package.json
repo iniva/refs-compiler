@@ -4,7 +4,6 @@
   "description": "Compiler for YAML, JSON and INI files using path references",
   "main": "lib/index.js",
   "author": "Tony Di Benedetto <tonyblast@gmail.com>",
-  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iniva/refs-compiler.git"
