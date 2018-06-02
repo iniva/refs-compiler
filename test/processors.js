@@ -2,109 +2,40 @@ const fs = require('fs');
 const { expect } = require('code');
 const { describe, it, after } = exports.lab = require('lab').script();
 
-const compiler = require('../');
+const Processor = require('../lib/processor');
+const yaml = require('../lib/processors/yaml');
+// const json = require('../lib/processors/json');
+// const ini = require('../lib/processors/ini');
 
-describe('Compiler Tests', () => {
-  const files = {
-    YAML: `${__dirname}/parsed.yaml`,
-    JSON: `${__dirname}/parsed.json`,
-    INI: `${__dirname}/parsed.ini`
-  };
-
-  it('should throw error and exit with no input file arguments', async () => {
-    const fn = async () => {
-      await compiler();
-    };
-
-    try {
-      await fn();
-    }
-    catch (error) {
-      expect(error.message).to.be.equal('No template file provided');
-    }
-  });
-
-  it('should throw error and exit with non-existent file path', async () => {
-    const fn = async () => {
-      await compiler('/tmp/does-not-exist.yaml');
-    };
-
-    try {
-      await fn();
-    }
-    catch (error) {
-      expect(error.message).to.be.equal('Path does not exist: /tmp/does-not-exist.yaml');
-    }
-  });
-
-  it('should throw error and exit with non-existent file path', async () => {
-    const fn = async () => {
-      await compiler('/tmp/does-not-exist');
-    };
-
-    try {
-      await fn();
-    }
-    catch (error) {
-      expect(error.message).to.be.equal('No valid config found');
-    }
-  });
-
-  describe('with files', () => {
-    after(() => {
-      try {
-        fs.unlinkSync(files.YAML);
-        fs.unlinkSync(files.JSON);
-        fs.unlinkSync(files.INI);
-      }
-      catch (error) {
-        console.log(error);
-      }
-    });
-
-    it('should throw error when processor.process throws an error with JSON file', async () => {
-      fs.writeFileSync(files.JSON, 'malformed json', 'utf-8');
-
-      const fn = async () => {
-        await compiler(files.JSON);
+describe('Processors Tests', () => {
+  describe('Processor Class', () => {
+    it('should throw error when getProcessor receives a wrong type', () => {
+      const fn = () => {
+        Processor.getProcessor('wrong');
       };
 
       try {
-        await fn();
+        fn();
       }
       catch (error) {
-        expect(error).to.be.instanceof(Error);
+        expect(error.message).to.be.equal('wrong processor is invalid');
       }
     });
 
-    it('should throw error when processor.process throws an error with YAML file', async () => {
-      fs.writeFileSync(files.YAML, 'malformed yaml', 'utf-8');
+    it('should return a valid processor when getProcessor receives a valid type', () => {
+      const yamlProcessor = Processor.getProcessor('yaml');
+      const ymlProcessor = Processor.getProcessor('yml');
+      const jsonProcessor = Processor.getProcessor('json');
+      const iniProcessor = Processor.getProcessor('ini');
 
-      const fn = async () => {
-        await compiler(files.YAML);
-      };
-
-      try {
-        await fn();
-      }
-      catch (error) {
-        expect(error).to.be.instanceof(Error);
-      }
-    });
-
-    it('should throw error when processor.process throws an error with INI file', async () => {
-      fs.writeFileSync(files.INI, 'malformed ini', 'utf-8');
-
-      const fn = async () => {
-        await compiler(files.INI);
-      };
-
-      try {
-        await fn();
-      }
-      catch (error) {
-        expect(error).to.be.instanceof(Error);
-      }
+      expect(yamlProcessor).to.be.an.object();
+      expect(ymlProcessor).to.be.an.object();
+      expect(jsonProcessor).to.be.an.object();
+      expect(iniProcessor).to.be.an.object();
+      expect(Object.keys(yamlProcessor)).to.include(['process', 'dump', 'write']);
+      expect(Object.keys(ymlProcessor)).to.include(['process', 'dump', 'write']);
+      expect(Object.keys(jsonProcessor)).to.include(['process', 'dump', 'write']);
+      expect(Object.keys(iniProcessor)).to.include(['process', 'dump', 'write']);
     });
   });
 });
