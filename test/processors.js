@@ -1,9 +1,9 @@
-const fs = require('fs');
+// const fs = require('fs');
 const { expect } = require('code');
-const { describe, it, after } = exports.lab = require('lab').script();
+const { describe, it } = exports.lab = require('lab').script();
 
 const Processor = require('../lib/processor');
-const yaml = require('../lib/processors/yaml');
+// const yaml = require('../lib/processors/yaml');
 // const json = require('../lib/processors/json');
 // const ini = require('../lib/processors/ini');
 
