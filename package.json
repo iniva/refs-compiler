@@ -31,8 +31,8 @@
     "audit": "npm audit",
     "lint": "eslint lib/ bin/ test/",
     "test": "lab -r console -c -a code -L",
-    "coverage": "lab -r html -o coverage.html -a code -L",
-    "coveralls": "lab -r lcov | ./node_modules/.bin/coveralls"
+    "test:coverage": "lab -r html -o coverage.html -a code -L",
+    "test:coveralls": "lab -r lcov | ./node_modules/.bin/coveralls"
   },
   "dependencies": {
     "commander": "^2.19.0",
