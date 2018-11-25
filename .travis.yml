@@ -1,15 +1,16 @@
+sudo: false
 language: node_js
 node_js:
-  - "lts/*"
-sudo: false
-before_install:
-  - npm install -g npm
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
-  - export PATH=$HOME/.yarn/bin:$PATH
+  - "8"
+  - "10"
+  - "node"
 cache:
   yarn: true
   directories:
     - "node_modules"
-install:
-  - yarn install
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
+services:
+  - mongodb
 after_script: "yarn coveralls"
