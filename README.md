@@ -1,11 +1,19 @@
 [![Coverage Status](https://coveralls.io/repos/github/iniva/refs-compiler/badge.svg?branch=master)](https://coveralls.io/github/iniva/refs-compiler?branch=master)
 [![Build Status](https://travis-ci.org/iniva/refs-compiler.svg?branch=master)](https://travis-ci.org/iniva/refs-compiler)
 
-# refs-compiler
+# References Compiler <!-- omit in toc -->
 
 Compiler for YAML, JSON and INI files using path references
 
-### Install:
+- [Install](#install)
+- [Example: YAML](#example-yaml)
+    - [Template(s)](#templates)
+- [Code](#code)
+- [CLI](#cli)
+- [Output](#output)
+- [Acknowledgement](#acknowledgement)
+
+## Install
 
 ```bash
 # npm
@@ -23,9 +31,9 @@ $ yarn global add refs-compiler
 $ yarn add refs-compiler -D
 ```
 
-### Example: YAML
+## Example: YAML
 
-#### Template(s):
+#### Template(s)
 ```yaml
 AWSTemplateFormatVersion: '2010-09-09'
 
@@ -63,7 +71,7 @@ Properties:
           - 'iam:PassRole'
 ```
 
-#### Code:
+## Code
 ```javascript
 const path = require('path');
 const compiler = require('refs-compiler');
@@ -86,12 +94,12 @@ try {
 }
 ```
 
-#### Or cli:
+## CLI
 ```bash
 $ refs-compiler -o ./build/output.yaml ./templates/template.yaml
 ```
 
-#### Output:
+## Output
 ```yaml
 AWSTemplateFormatVersion: '2010-09-09'
 Resources:
@@ -119,6 +127,3 @@ Resources:
 ## Acknowledgement
 
 The base code was borrowed from [doublenot/refs](https://github.com/doublenot/refs) and then refactored / rewritten to support NodeJS 8+ using native Promises + async/await
-
-## Pending Tasks
-- [ ] Tests
