@@ -11,14 +11,12 @@ describe('Compiler CLI', () => {
   let stdoutContent = null;
 
   beforeEach(() => {
-    stdoutContent = `
-  Usage: compiler [options] <file>
+    stdoutContent = `Usage: compiler [options] <file>
 
-  Options:
-
-    -V, --version        output the version number
-    -o, --output <file>  The path for the output file
-    -h, --help           output usage information
+Options:
+  -V, --version        output the version number
+  -o, --output <file>  The path for the output file
+  -h, --help           output usage information
 `;
   });
 
