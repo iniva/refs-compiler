@@ -23,9 +23,14 @@ export default class Processor {
    * @param {String} type
    */
   getProcessor(type) {
-    if (!hasOwnProperty(this.processors, type)) {
-      throw new Error(`${type} processor is invalid`);
+    if (!type) {
+      throw new Error('You must specify a processor type');
     }
+
+    if (!hasOwnProperty(this.processors, type)) {
+      throw new Error(`Processor [${type}] is invalid`);
+    }
+
     return this.processors[type];
   }
 }
