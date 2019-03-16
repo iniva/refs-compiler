@@ -9,7 +9,7 @@ const process = (filePath, key) => extract(filePath, JSON.parse)
   .then(dataString => transform(dataString, key, filePath, process));
 
 const write = (outputFile, compiled) => new Promise((resolve, reject) => {
-  fs.writeFile(outputFile, compiled, 'utf-8', (err) => {
+  fs.writeFile(outputFile, compiled, 'utf-8', err => {
     if (err) {
       return reject(err);
     }
@@ -18,7 +18,7 @@ const write = (outputFile, compiled) => new Promise((resolve, reject) => {
   });
 });
 
-const dump = compiled => new Promise((resolve) => {
+const dump = compiled => new Promise(resolve => {
   resolve({
     content: JSON.stringify(compiled),
   });

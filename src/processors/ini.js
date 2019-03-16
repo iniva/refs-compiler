@@ -6,7 +6,7 @@ const ini = require('ini');
 const { extract, transform } = require('../utils');
 
 const process = (filePath, key) => extract(filePath, ini.parse)
-  .then((dataString) => {
+  .then(dataString => {
     if (dataString.includes('$merge')) {
       return Promise.reject(new Error('INI config does not support $merge settings.'));
     }
@@ -15,7 +15,7 @@ const process = (filePath, key) => extract(filePath, ini.parse)
   });
 
 const write = (outputFile, compiled) => new Promise((resolve, reject) => {
-  fs.writeFile(outputFile, ini.stringify(compiled), 'utf-8', (err) => {
+  fs.writeFile(outputFile, ini.stringify(compiled), 'utf-8', err => {
     if (err) {
       return reject(err);
     }
@@ -29,8 +29,7 @@ const dump = compiled => new Promise((resolve, reject) => {
     resolve({
       content: ini.stringify(compiled),
     });
-  }
-  catch (err) {
+  } catch (err) {
     reject(err);
   }
 });

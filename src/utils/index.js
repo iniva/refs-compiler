@@ -3,5 +3,5 @@ const transform = require('../utils/transform');
 
 module.exports = {
   extract,
-  transform
+  transform,
 };

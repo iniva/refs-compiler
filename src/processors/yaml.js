@@ -16,7 +16,7 @@ const process = (filePath, key) => extract(filePath, parser)
   .then(dataString => transform(dataString, key, filePath, process));
 
 const write = (outputFile, compiled) => new Promise((resolve, reject) => {
-  yaml.write(outputFile, compiled, options, (err) => {
+  yaml.write(outputFile, compiled, options, err => {
     if (err) {
       return reject(err);
     }
@@ -30,8 +30,7 @@ const dump = compiled => new Promise((resolve, reject) => {
     resolve({
       content: yaml.dump(compiled),
     });
-  }
-  catch (err) {
+  } catch (err) {
     reject(err);
   }
 });
@@ -39,5 +38,5 @@ const dump = compiled => new Promise((resolve, reject) => {
 module.exports = {
   process,
   dump,
-  write
+  write,
 };

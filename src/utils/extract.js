@@ -16,8 +16,7 @@ const extract = (filePath, parser) => new Promise((resolve, reject) => {
     const data = parser(fileData);
 
     return resolve(JSON.stringify(data));
-  }
-  catch (err) {
+  } catch (err) {
     return reject(err);
   }
 });

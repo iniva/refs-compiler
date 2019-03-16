@@ -11,7 +11,7 @@ const transform = (dataStr, key, filePath, process) => new Promise((resolve, rej
   if (refMatches && refMatches.length > 0) {
     const refFileList = [];
 
-    refMatches.forEach((matchKey) => {
+    refMatches.forEach(matchKey => {
       const refFile = matchKey.match(/{"\$ref":"(.*)"}/)[1];
       const refFilePath = path.resolve(`${baseDir}/${refFile}`);
 
@@ -19,11 +19,11 @@ const transform = (dataStr, key, filePath, process) => new Promise((resolve, rej
     });
 
     return Promise.all(refFileList)
-      .then((results) => {
+      .then(results => {
         const mergeMatches = dataString.match(/{"\$merge":\[(.*?)\]}/g);
 
         if (mergeMatches && mergeMatches.length > 0) {
-          mergeMatches.forEach((mergeMatchKey) => {
+          mergeMatches.forEach(mergeMatchKey => {
             const localMatches = [];
             const localRefMatches = mergeMatchKey.match(/{"\$ref":"(.*?)"}/g);
 
@@ -31,7 +31,7 @@ const transform = (dataStr, key, filePath, process) => new Promise((resolve, rej
               reject(new Error('Malformed merge setting, please check the input file.'));
               return;
             }
-            localRefMatches.forEach((refMatchKey) => {
+            localRefMatches.forEach(refMatchKey => {
               const j = results.length;
 
               for (let i = 0; i < j; i += 1) {
@@ -49,9 +49,8 @@ const transform = (dataStr, key, filePath, process) => new Promise((resolve, rej
 
             dataString = dataString.replace(mergeMatchKey, localMatchesStr);
           });
-        }
-        else {
-          results.forEach((result) => {
+        } else {
+          results.forEach(result => {
             dataString = dataString.replace(result.key, result.dataString);
           });
         }

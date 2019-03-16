@@ -8,6 +8,7 @@
 *   - Ini
 */
 
+const { hasOwnProperty } = require('./utils/objects');
 const yaml = require('./processors/yaml');
 const json = require('./processors/json');
 const ini = require('./processors/ini');
@@ -21,7 +22,7 @@ const processors = {
 
 class Processor {
   static getProcessor(type) {
-    if (!processors.hasOwnProperty(type)) {
+    if (!hasOwnProperty(processors, type)) {
       throw new Error(`${type} processor is invalid`);
     }
     return processors[type];

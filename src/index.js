@@ -23,13 +23,12 @@ const compile = async (inputFile, outputFile) => new Promise((resolve, reject) =
 
     try {
       fs.statSync(inputFilePath);
-    }
-    catch (err) {
+    } catch (err) {
       return reject(new Error(`Path does not exist: ${inputFilePath}`));
     }
 
     return processor.process(inputFilePath)
-      .then((contentPkg) => {
+      .then(contentPkg => {
         try {
           const compiled = JSON.parse(contentPkg.dataString);
 
@@ -39,22 +38,20 @@ const compile = async (inputFile, outputFile) => new Promise((resolve, reject) =
           }
 
           return processor.dump(compiled);
-        }
-        catch (err) {
+        } catch (err) {
           return reject(new Error(`An error occurred while parsing JSON string: ${err.message}`));
         }
       })
-      .then((results) => {
+      .then(results => {
         resolve({
           outputFile: results.outputFile || null,
           content: results.content || null,
         });
       })
-      .catch((err) => {
+      .catch(err => {
         reject(err);
       });
-  }
-  catch (err) {
+  } catch (err) {
     return reject(err);
   }
 });
