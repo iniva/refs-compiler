@@ -1,6 +1,8 @@
 const fs = require('fs');
 const { expect } = require('code');
-const { describe, it, after } = exports.lab = require('lab').script();
+const lab = require('lab').script();
+
+const { describe, it, after } = lab;
 
 const compiler = require('../');
 
@@ -8,7 +10,7 @@ describe('Compiler Tests', () => {
   const files = {
     YAML: `${__dirname}/parsed.yaml`,
     JSON: `${__dirname}/parsed.json`,
-    INI: `${__dirname}/parsed.ini`
+    INI: `${__dirname}/parsed.ini`,
   };
 
   it('should throw error and exit with no input file arguments', async () => {
@@ -18,8 +20,7 @@ describe('Compiler Tests', () => {
 
     try {
       await fn();
-    }
-    catch (error) {
+    } catch (error) {
       expect(error.message).to.be.equal('No template file provided');
     }
   });
@@ -31,8 +32,7 @@ describe('Compiler Tests', () => {
 
     try {
       await fn();
-    }
-    catch (error) {
+    } catch (error) {
       expect(error.message).to.be.equal(`Path does not exist: ${__dirname}/does-not-exist.yaml`);
     }
   });
@@ -44,8 +44,7 @@ describe('Compiler Tests', () => {
 
     try {
       await fn();
-    }
-    catch (error) {
+    } catch (error) {
       expect(error.message).to.be.equal('No valid config found');
     }
   });
@@ -56,8 +55,7 @@ describe('Compiler Tests', () => {
         fs.unlinkSync(files.JSON);
         fs.unlinkSync(files.YAML);
         fs.unlinkSync(files.INI);
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error);
       }
     });
@@ -72,15 +70,14 @@ describe('Compiler Tests', () => {
 
         try {
           await fn();
-        }
-        catch (error) {
+        } catch (error) {
           expect(error).to.be.instanceof(Error);
         }
       });
 
       it('should parse correctly a JSON template', async () => {
         compiler(`${__dirname}/data/file.json`, files.JSON)
-          .then((results) => {
+          .then(results => {
             expect(results.outputFile).to.be.equal(files.JSON);
           });
       });
@@ -96,15 +93,14 @@ describe('Compiler Tests', () => {
 
         try {
           await fn();
-        }
-        catch (error) {
+        } catch (error) {
           expect(error).to.be.instanceof(Error);
         }
       });
 
       it('should parse correctly a YAML template', async () => {
         compiler(`${__dirname}/data/file.yaml`, files.YAML)
-          .then((results) => {
+          .then(results => {
             expect(results.outputFile).to.be.equal(files.YAML);
           });
       });
@@ -120,15 +116,14 @@ describe('Compiler Tests', () => {
 
         try {
           await fn();
-        }
-        catch (error) {
+        } catch (error) {
           expect(error).to.be.instanceof(Error);
         }
       });
 
       it('should parse correctly an INI template', async () => {
         compiler(`${__dirname}/data/file.ini`, files.INI)
-          .then((results) => {
+          .then(results => {
             expect(results.outputFile).to.be.equal(files.INI);
           });
       });

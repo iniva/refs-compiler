@@ -1,6 +1,9 @@
 // const fs = require('fs');
 const { expect } = require('code');
-const { describe, it } = exports.lab = require('lab').script();
+const lab = require('lab').script();
+
+
+const { describe, it } = lab;
 
 const Processor = require('../lib/processor');
 // const yaml = require('../lib/processors/yaml');
@@ -16,8 +19,7 @@ describe('Processors Tests', () => {
 
       try {
         fn();
-      }
-      catch (error) {
+      } catch (error) {
         expect(error.message).to.be.equal('wrong processor is invalid');
       }
     });

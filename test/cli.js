@@ -2,7 +2,9 @@ const fs = require('fs');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const { expect } = require('code');
-const { describe, it, beforeEach, afterEach, after } = exports.lab = require('lab').script();
+const lab = require('lab').script();
+
+const { describe, it, beforeEach, afterEach, after } = lab;
 const { version } = require('../package');
 
 const COMPILER = './bin/compiler.js';
@@ -73,11 +75,10 @@ Options:
       };
 
       try {
-        await new Promise((resolve) => {
+        await new Promise(resolve => {
           resolve(fn());
         });
-      }
-      catch (error) {
+      } catch (error) {
         const trueErrorMessage = error.stderr.split('\n').shift();
 
         expect(trueErrorMessage).to.be.equal('Error: No valid config found');
