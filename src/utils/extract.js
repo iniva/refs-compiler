@@ -1,7 +1,4 @@
-/*
-* Utility: Extract
- */
-const fs = require('fs');
+import fs from 'fs';
 
 const extract = (filePath, parser) => new Promise((resolve, reject) => {
   if (!filePath) {
@@ -10,9 +7,11 @@ const extract = (filePath, parser) => new Promise((resolve, reject) => {
 
   try {
     const fileData = fs.readFileSync(filePath, 'utf-8');
+
     if (fileData === '') {
       return reject(new Error('Empty file, nothing to process.'));
     }
+
     const data = parser(fileData);
 
     return resolve(JSON.stringify(data));
@@ -21,4 +20,4 @@ const extract = (filePath, parser) => new Promise((resolve, reject) => {
   }
 });
 
-module.exports = extract;
+export default extract;

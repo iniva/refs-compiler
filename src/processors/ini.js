@@ -1,9 +1,8 @@
-/*
-* Processor: INI
-*/
-const fs = require('fs');
-const ini = require('ini');
-const { extract, transform } = require('../utils');
+import fs from 'fs';
+import ini from 'ini';
+
+import extract from '../utils/extract';
+import transform from '../utils/transform';
 
 const process = (filePath, key) => extract(filePath, ini.parse)
   .then(dataString => {
@@ -34,7 +33,7 @@ const dump = compiled => new Promise((resolve, reject) => {
   }
 });
 
-module.exports = {
+export {
   process,
   dump,
   write,

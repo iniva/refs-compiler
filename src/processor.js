@@ -1,32 +1,31 @@
-/*
-* Processor Class
-*
-* Available processors:
-*   - Yml
-*   - Yaml
-*   - Json
-*   - Ini
-*/
+import * as yamlProcessor from './processors/yaml';
+import * as jsonProcessor from './processors/json';
+import * as iniProcessor from './processors/ini';
+import { hasOwnProperty } from './utils/objects';
 
-const { hasOwnProperty } = require('./utils/objects');
-const yaml = require('./processors/yaml');
-const json = require('./processors/json');
-const ini = require('./processors/ini');
+/**
+ * @class Processor
+ */
+export default class Processor {
+  constructor() {
+    this.processors = {
+      yml: yamlProcessor,
+      yaml: yamlProcessor,
+      json: jsonProcessor,
+      ini: iniProcessor,
+    };
+  }
 
-const processors = {
-  yml: yaml,
-  yaml,
-  json,
-  ini,
-};
-
-class Processor {
-  static getProcessor(type) {
-    if (!hasOwnProperty(processors, type)) {
+  /**
+   * @function getProcessor
+   * @description Returns a Processor for the [type] passed
+   *
+   * @param {String} type
+   */
+  getProcessor(type) {
+    if (!hasOwnProperty(this.processors, type)) {
       throw new Error(`${type} processor is invalid`);
     }
-    return processors[type];
+    return this.processors[type];
   }
 }
-
-module.exports = Processor;

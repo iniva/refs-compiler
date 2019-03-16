@@ -1,7 +1,4 @@
-/*
-* Utility: Transform
- */
-const path = require('path');
+import path from 'path';
 
 const transform = (dataStr, key, filePath, process) => new Promise((resolve, reject) => {
   let dataString = dataStr;
@@ -74,4 +71,4 @@ const transform = (dataStr, key, filePath, process) => new Promise((resolve, rej
   });
 });
 
-module.exports = transform;
+export default transform;

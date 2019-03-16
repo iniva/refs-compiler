@@ -1,9 +1,7 @@
-/*
-* Processor: JSON
-*/
-const fs = require('fs');
+import fs from 'fs';
 
-const { extract, transform } = require('../utils');
+import extract from '../utils/extract';
+import transform from '../utils/transform';
 
 const process = (filePath, key) => extract(filePath, JSON.parse)
   .then(dataString => transform(dataString, key, filePath, process));
@@ -24,7 +22,7 @@ const dump = compiled => new Promise(resolve => {
   });
 });
 
-module.exports = {
+export {
   process,
   dump,
   write,

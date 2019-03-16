@@ -1,10 +1,7 @@
-/*
-* Compile: main function
-*/
+import path from 'path';
+import fs from 'fs';
 
-const path = require('path');
-const fs = require('fs');
-const Processor = require('./processor');
+import Processor from './processor';
 
 const compile = async (inputFile, outputFile) => new Promise((resolve, reject) => {
   try {
@@ -56,4 +53,4 @@ const compile = async (inputFile, outputFile) => new Promise((resolve, reject) =
   }
 });
 
-module.exports = compile;
+export default compile;

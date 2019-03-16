@@ -1,9 +1,7 @@
-/*
-* Processor: YAML/YML
-*/
-const yaml = require('node-yaml');
+import yaml from 'node-yaml';
 
-const { extract, transform } = require('../utils');
+import extract from '../utils/extract';
+import transform from '../utils/transform';
 
 const options = {
   encoding: 'utf8',
@@ -35,7 +33,7 @@ const dump = compiled => new Promise((resolve, reject) => {
   }
 });
 
-module.exports = {
+export {
   process,
   dump,
   write,
