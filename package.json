@@ -28,8 +28,10 @@
     "node": ">=8"
   },
   "scripts": {
+    "clean": "rm -rf lib",
     "commit": "git-cz",
     "hooks:message": "node hooks/index.js --action=message",
+    "build": "yarn clean && babel src --out-dir lib --copy-files",
     "lint": "eslint src/",
     "lint:bin": "eslint bin/",
     "lint:test": "eslint test/",
