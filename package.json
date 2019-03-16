@@ -31,7 +31,7 @@
     "audit": "npm audit",
     "commit": "git-cz",
     "hooks:message": "node hooks/index.js --action=message",
-    "lint": "eslint lib/ bin/ test/",
+    "lint": "eslint src/ bin/ test/",
     "test": "lab -r console -c -a code -L",
     "test:coverage": "lab -r html -o coverage.html -a code -L",
     "test:coveralls": "lab -r lcov | ./node_modules/.bin/coveralls"
