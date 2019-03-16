@@ -1,12 +1,10 @@
 #!/usr/bin/env node
-/* eslint no-console: 0 */
+/* eslint no-console: off */
 
-/*
-* Compiler: CLI program
-*/
-const program = require('commander');
-const { version } = require('../package');
-const compile = require('../');
+import program from 'commander';
+
+import { version } from '../package';
+import compile from '../lib';
 
 let inputFile = null;
 let outputFile = null;
@@ -38,8 +36,7 @@ if (!inputFile) {
 
     console.log(`Done. ${message}`);
     process.exit(0);
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
     process.exit(1);
   }
