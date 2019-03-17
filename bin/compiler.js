@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /* eslint no-console: off */
 
-import program from 'commander';
+const program = require('commander');
 
-import { version } from '../package';
-import compile from '../lib';
+const { version } = require('../package');
+const compile = require('../lib');
 
 let inputFile = null;
 let outputFile = null;
