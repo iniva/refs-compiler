@@ -10,28 +10,36 @@ const options = {
 
 const parser = data => yaml.parse(data, options);
 
-const process = (filePath, key) => extract(filePath, parser)
-  .then(dataString => transform(dataString, key, filePath, process));
+const process = async (filePath, key) => {
+  try {
+    const extracted = await extract(filePath, parser);
+    const transfromed = await transform(extracted, key, filePath, process);
 
-const write = (outputFile, compiled) => new Promise((resolve, reject) => {
+    return transfromed;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const write = async (outputFile, compiled) => {
   yaml.write(outputFile, compiled, options, err => {
     if (err) {
-      return reject(err);
+      throw err;
     }
 
-    return resolve({ outputFile });
+    return { outputFile };
   });
-});
+};
 
-const dump = compiled => new Promise((resolve, reject) => {
+const dump = compiled => {
   try {
-    resolve({
-      content: yaml.dump(compiled),
-    });
+    const content = yaml.dump(compiled);
+
+    return { content };
   } catch (err) {
-    reject(err);
+    throw err;
   }
-});
+};
 
 export {
   process,

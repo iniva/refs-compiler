@@ -1,37 +1,47 @@
 import fs from 'fs';
 import ini from 'ini';
+import { promisify } from 'util';
 
 import extract from '../utils/extract';
 import transform from '../utils/transform';
 
-const process = (filePath, key) => extract(filePath, ini.parse)
-  .then(dataString => {
-    if (dataString.includes('$merge')) {
-      return Promise.reject(new Error('INI config does not support $merge settings.'));
-    }
+const asyncWriteFile = promisify(fs.writeFile);
 
-    return transform(dataString, key, filePath, process);
-  });
-
-const write = (outputFile, compiled) => new Promise((resolve, reject) => {
-  fs.writeFile(outputFile, ini.stringify(compiled), 'utf-8', err => {
-    if (err) {
-      return reject(err);
-    }
-
-    return resolve({ outputFile });
-  });
-});
-
-const dump = compiled => new Promise((resolve, reject) => {
+const process = async (filePath, key) => {
   try {
-    resolve({
-      content: ini.stringify(compiled),
-    });
+    const extracted = await extract(filePath, ini.parse);
+
+    if (extracted.includes('$merge')) {
+      throw new Error('INI config does not support $merge settings.');
+    }
+
+    const transfromed = await transform(extracted, key, filePath, process);
+
+    return transfromed;
   } catch (err) {
-    reject(err);
+    throw err;
   }
-});
+};
+
+const write = async (outputFile, compiled) => {
+  try {
+    await asyncWriteFile(outputFile, ini.stringify(compiled), 'utf-8');
+
+    return { outputFile };
+  } catch (err) {
+    throw err;
+  }
+};
+
+const dump = compiled => {
+  try {
+    const content = ini.stringify(compiled);
+
+    return { content };
+  } catch (err) {
+    throw err;
+  }
+};
 
 export {
   process,

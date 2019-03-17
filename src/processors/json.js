@@ -3,24 +3,36 @@ import fs from 'fs';
 import extract from '../utils/extract';
 import transform from '../utils/transform';
 
-const process = (filePath, key) => extract(filePath, JSON.parse)
-  .then(dataString => transform(dataString, key, filePath, process));
+const process = async (filePath, key) => {
+  try {
+    const extracted = await extract(filePath, JSON.parse);
+    const transfromed = await transform(extracted, key, filePath, process);
 
-const write = (outputFile, compiled) => new Promise((resolve, reject) => {
+    return transfromed;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const write = async (outputFile, compiled) => {
   fs.writeFile(outputFile, compiled, 'utf-8', err => {
     if (err) {
-      return reject(err);
+      throw err;
     }
 
-    return resolve({ outputFile });
+    return { outputFile };
   });
-});
+};
 
-const dump = compiled => new Promise(resolve => {
-  resolve({
-    content: JSON.stringify(compiled),
-  });
-});
+const dump = compiled => {
+  try {
+    const content = JSON.stringify(compiled);
+
+    return { content };
+  } catch (err) {
+    throw err;
+  }
+};
 
 export {
   process,
