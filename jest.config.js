@@ -1,6 +1,7 @@
 module.exports = {
   testMatch: [
     '<rootDir>/src/**/?(*.)test.js',
+    '<rootDir>/bin/**/?(*.)test.js',
   ],
   testPathIgnorePatterns: [
     '/node_modules/',
