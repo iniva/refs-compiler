@@ -4,7 +4,7 @@
 const program = require('commander');
 
 const { version } = require('../package');
-const compile = require('../lib');
+const { default: compile } = require('..');
 
 let inputFile = null;
 let outputFile = null;
