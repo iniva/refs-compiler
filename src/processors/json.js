@@ -1,7 +1,10 @@
 import fs from 'fs';
+import { promisify } from 'util';
 
 import extract from '../utils/extract';
 import transform from '../utils/transform';
+
+const asyncWrite = promisify(fs.writeFile);
 
 const process = async (filePath, key) => {
   try {
@@ -15,13 +18,13 @@ const process = async (filePath, key) => {
 };
 
 const write = async (outputFile, compiled) => {
-  fs.writeFile(outputFile, compiled, 'utf-8', err => {
-    if (err) {
-      throw err;
-    }
+  try {
+    await asyncWrite(outputFile, compiled, 'utf-8');
 
     return { outputFile };
-  });
+  } catch (err) {
+    throw err;
+  }
 };
 
 const dump = compiled => {
