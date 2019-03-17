@@ -25,7 +25,7 @@ const process = async (filePath, key) => {
 
 const write = async (outputFile, compiled) => {
   try {
-    await yaml.write(outputFile, compiled, options);
+    await asyncWrite(outputFile, compiled, options);
 
     return { outputFile };
   } catch (err) {
