@@ -1,21 +1,21 @@
 import path from 'path';
 
-const transform = (dataStr, key, filePath, process) => new Promise((resolve, reject) => {
+const transform = async (dataStr, key, filePath, process) => {
   let dataString = dataStr;
   const refMatches = dataString.match(/{"\$ref":"(.*?)"}/g);
   const baseDir = path.dirname(filePath);
 
   if (refMatches && refMatches.length > 0) {
-    const refFileList = [];
+    const refFilePromises = [];
 
     refMatches.forEach(matchKey => {
       const refFile = matchKey.match(/{"\$ref":"(.*)"}/)[1];
       const refFilePath = path.resolve(`${baseDir}/${refFile}`);
 
-      refFileList.push(process(refFilePath, matchKey));
+      refFilePromises.push(process(refFilePath, matchKey));
     });
 
-    return Promise.all(refFileList)
+    return Promise.all(refFilePromises)
       .then(results => {
         const mergeMatches = dataString.match(/{"\$merge":\[(.*?)\]}/g);
 
@@ -25,8 +25,7 @@ const transform = (dataStr, key, filePath, process) => new Promise((resolve, rej
             const localRefMatches = mergeMatchKey.match(/{"\$ref":"(.*?)"}/g);
 
             if (!localRefMatches || localRefMatches.length === 0) {
-              reject(new Error('Malformed merge setting, please check the input file.'));
-              return;
+              throw new Error('Malformed merge setting, please check the input file.');
             }
             localRefMatches.forEach(refMatchKey => {
               const j = results.length;
@@ -46,29 +45,34 @@ const transform = (dataStr, key, filePath, process) => new Promise((resolve, rej
 
             dataString = dataString.replace(mergeMatchKey, localMatchesStr);
           });
-        } else {
-          results.forEach(result => {
-            dataString = dataString.replace(result.key, result.dataString);
-          });
+
+          return {
+            dataString,
+            key,
+          };
         }
 
-        return resolve({
+        results.forEach(result => {
+          dataString = dataString.replace(result.key, result.dataString);
+        });
+
+        return {
           dataString,
           key,
-        });
+        };
       });
   }
 
   const mergeMatches = dataString.match(/{"\$merge":\[(.*?)\]}/g);
 
   if (mergeMatches && mergeMatches.length > 0) {
-    return reject(new Error('Malformed merge setting, please check the input file.'));
+    throw new Error('Malformed merge setting, please check the input file.');
   }
 
-  return resolve({
+  return {
     dataString,
     key,
-  });
-});
+  };
+};
 
 export default transform;

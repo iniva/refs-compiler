@@ -1,23 +1,26 @@
 import fs from 'fs';
+import { promisify } from 'util';
 
-const extract = (filePath, parser) => new Promise((resolve, reject) => {
+const asyncReadFile = promisify(fs.readFile);
+
+const extract = async (filePath, parser) => {
   if (!filePath) {
-    return reject(new Error('Requires a file path to process.'));
+    throw new Error('Requires a file path to process.');
   }
 
   try {
-    const fileData = fs.readFileSync(filePath, 'utf-8');
+    const fileData = await asyncReadFile(filePath, 'utf-8');
 
     if (fileData === '') {
-      return reject(new Error('Empty file, nothing to process.'));
+      throw new Error('Empty file, nothing to process.');
     }
 
     const data = parser(fileData);
 
-    return resolve(JSON.stringify(data));
+    return JSON.stringify(data);
   } catch (err) {
-    return reject(err);
+    throw err;
   }
-});
+};
 
 export default extract;
