@@ -26,7 +26,7 @@ const compile = async (inputFile, outputFile) => {
   let contentPkg = null;
 
   try {
-    contentPkg = await processor.process(inputFilePath);
+    contentPkg = await processor.handler(inputFilePath);
   } catch (err) {
     throw err;
   }
