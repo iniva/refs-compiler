@@ -1,6 +1,6 @@
 import path from 'path';
 
-const transform = async (dataStr, key, filePath, process) => {
+const transform = async (dataStr, key, filePath, handler) => {
   let dataString = dataStr;
   const refMatches = dataString.match(/{"\$ref":"(.*?)"}/g);
   const baseDir = path.dirname(filePath);
@@ -12,7 +12,7 @@ const transform = async (dataStr, key, filePath, process) => {
       const refFile = matchKey.match(/{"\$ref":"(.*)"}/)[1];
       const refFilePath = path.resolve(`${baseDir}/${refFile}`);
 
-      refFilePromises.push(process(refFilePath, matchKey));
+      refFilePromises.push(handler(refFilePath, matchKey));
     });
 
     return Promise.all(refFilePromises)
