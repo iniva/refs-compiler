@@ -7,7 +7,7 @@ import transform from '../utils/transform';
 
 const asyncWriteFile = promisify(fs.writeFile);
 
-const process = async (filePath, key) => {
+const handler = async (filePath, key) => {
   try {
     const extracted = await extract(filePath, ini.parse);
 
@@ -15,9 +15,9 @@ const process = async (filePath, key) => {
       throw new Error('INI config does not support $merge settings.');
     }
 
-    const transfromed = await transform(extracted, key, filePath, process);
+    const transformed = await transform(extracted, key, filePath, handler);
 
-    return transfromed;
+    return transformed;
   } catch (err) {
     throw err;
   }
@@ -44,7 +44,7 @@ const dump = compiled => {
 };
 
 export {
-  process,
+  handler,
   dump,
   write,
 };

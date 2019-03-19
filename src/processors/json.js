@@ -6,12 +6,12 @@ import transform from '../utils/transform';
 
 const asyncWrite = promisify(fs.writeFile);
 
-const process = async (filePath, key) => {
+const handler = async (filePath, key) => {
   try {
     const extracted = await extract(filePath, JSON.parse);
-    const transfromed = await transform(extracted, key, filePath, process);
+    const transformed = await transform(extracted, key, filePath, handler);
 
-    return transfromed;
+    return transformed;
   } catch (err) {
     throw err;
   }
@@ -38,7 +38,7 @@ const dump = compiled => {
 };
 
 export {
-  process,
+  handler,
   dump,
   write,
 };
