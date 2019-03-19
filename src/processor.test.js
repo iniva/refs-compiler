@@ -21,7 +21,7 @@ describe('Processor', () => {
 
   it('should return a processor when given a valid type', () => {
     const processor = new Processor();
-    const expectedProperties = ['process', 'dump', 'write'];
+    const expectedProperties = ['handler', 'dump', 'write'];
 
     const yamlProcessor = processor.getProcessor('yaml');
     const ymlProcessor = processor.getProcessor('yml');
