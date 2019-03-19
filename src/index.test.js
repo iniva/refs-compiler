@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import compile from '..';
+import compile from '.';
 
 const TEST_DATA_DIR = path.resolve(__dirname, '../test/data');
 
