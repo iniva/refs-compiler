@@ -43,7 +43,7 @@ describe('Compile function', () => {
         fs.unlinkSync(targetFiles.JSON);
       });
 
-      it('should throw error when processor.process throws an error with a JSON file', async () => {
+      it('should throw error when processor.handler throws an error with a JSON file', async () => {
         fs.writeFileSync(targetFiles.JSON, 'malformed json', 'utf-8');
 
         try {
@@ -65,7 +65,7 @@ describe('Compile function', () => {
         fs.unlinkSync(targetFiles.YAML);
       });
 
-      it('should throw error when processor.process throws an error with a YAML/YML file', async () => {
+      it('should throw error when processor.handler throws an error with a YAML/YML file', async () => {
         fs.writeFileSync(targetFiles.YAML, 'malformed yaml', 'utf-8');
 
         try {
@@ -87,7 +87,7 @@ describe('Compile function', () => {
         fs.unlinkSync(targetFiles.INI);
       });
 
-      it('should throw error when processor.process throws an error with an INI file', async () => {
+      it('should throw error when processor.handler throws an error with an INI file', async () => {
         fs.writeFileSync(targetFiles.INI, 'malformed ini', 'utf-8');
 
         try {
