@@ -13,7 +13,7 @@ describe('Compile function', () => {
     INI: `${__dirname}/parsed.ini`,
   };
 
-  it('should throw error when not receiving an input file', async () => {
+  it('should throw when not receiving an input file', async () => {
     try {
       await compile();
     } catch (error) {
@@ -21,7 +21,7 @@ describe('Compile function', () => {
     }
   });
 
-  it('should throw error when input file does not exist', async () => {
+  it('should throw when input file does not exist', async () => {
     try {
       await compile(`${__dirname}/does-not-exist.yaml`);
     } catch (error) {
@@ -29,7 +29,7 @@ describe('Compile function', () => {
     }
   });
 
-  it('should throw error when file extension is not present', async () => {
+  it('should throw when file extension is not present', async () => {
     try {
       await compile(`${__dirname}/does-not-exist`);
     } catch (error) {
@@ -43,14 +43,12 @@ describe('Compile function', () => {
         fs.unlinkSync(targetFiles.JSON);
       });
 
-      it('should throw error when processor.handler throws an error with a JSON file', async () => {
+      it('should throw when processor.handler throws an error with a JSON file', async () => {
         fs.writeFileSync(targetFiles.JSON, 'malformed json', 'utf-8');
 
-        try {
-          await compile(targetFiles.JSON);
-        } catch (error) {
-          expect(error).toBeInstanceOf(Error);
-        }
+        await expect(compile(targetFiles.JSON))
+          .rejects
+          .toThrow('Unexpected token');
       });
 
       it('should parse correctly a JSON template', async () => {
@@ -65,14 +63,12 @@ describe('Compile function', () => {
         fs.unlinkSync(targetFiles.YAML);
       });
 
-      it('should throw error when processor.handler throws an error with a YAML/YML file', async () => {
-        fs.writeFileSync(targetFiles.YAML, 'malformed yaml', 'utf-8');
+      it('should throw when processor.handler throws an error with a YAML/YML file', async () => {
+        fs.writeFileSync(targetFiles.YAML, 'key: "malformed yaml', 'utf-8');
 
-        try {
-          await compile(targetFiles.YAML);
-        } catch (error) {
-          expect(error).toBeInstanceOf(Error);
-        }
+        await expect(compile(targetFiles.YAML))
+          .rejects
+          .toThrow('unexpected');
       });
 
       it('should parse correctly a YAML/YML template', async () => {
@@ -87,14 +83,12 @@ describe('Compile function', () => {
         fs.unlinkSync(targetFiles.INI);
       });
 
-      it('should throw error when processor.handler throws an error with an INI file', async () => {
-        fs.writeFileSync(targetFiles.INI, 'malformed ini', 'utf-8');
+      it('should throw when processor.handler throws an error with an INI file', async () => {
+        fs.writeFileSync(targetFiles.INI, '$merge=/file.ini', 'utf-8');
 
-        try {
-          await compile(targetFiles.INI);
-        } catch (error) {
-          expect(error).toBeInstanceOf(Error);
-        }
+        await expect(compile(`${TEST_DATA_DIR}/file-merge.ini`))
+          .rejects
+          .toThrow('INI config does not support $merge settings.');
       });
 
       it('should parse correctly an INI template', async () => {
