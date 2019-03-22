@@ -19,7 +19,7 @@ const handler = async (filePath, key) => {
 
 const write = async (outputFile, compiled) => {
   try {
-    await asyncWrite(outputFile, compiled, 'utf-8');
+    await asyncWrite(outputFile, JSON.stringify(compiled), 'utf-8');
 
     return { outputFile };
   } catch (err) {
