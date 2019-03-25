@@ -37,7 +37,7 @@ describe('Compile function', () => {
     }
   });
 
-  describe('With files', () => {
+  describe('With output files', () => {
     describe('JSON', () => {
       afterEach(() => {
         fs.unlinkSync(targetFiles.JSON);
@@ -96,6 +96,29 @@ describe('Compile function', () => {
 
         expect(results.outputFile).toEqual(targetFiles.INI);
       });
+    });
+  });
+
+  describe('STDOUT results', () => {
+    it('should parse correctly a JSON template and return the result through the stdout', async () => {
+      const results = await compile(`${TEST_DATA_DIR}/file.json`);
+
+      expect(results.outputFile).toEqual(null);
+      expect(typeof results.content).toEqual('string');
+    });
+
+    it('should parse correctly a YAML template and return the result through the stdout', async () => {
+      const results = await compile(`${TEST_DATA_DIR}/file.yaml`);
+
+      expect(results.outputFile).toEqual(null);
+      expect(typeof results.content).toEqual('string');
+    });
+
+    it('should parse correctly an INI template and return the result through the stdout', async () => {
+      const results = await compile(`${TEST_DATA_DIR}/file.ini`);
+
+      expect(results.outputFile).toEqual(null);
+      expect(typeof results.content).toEqual('string');
     });
   });
 });
