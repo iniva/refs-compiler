@@ -1,7 +1,7 @@
 /* global describe it expect */
 import path from 'path';
 import ini from 'ini';
-import yaml from 'node-yaml';
+import yaml from 'js-yaml';
 
 import transform from './transform';
 import extract from './extract';
@@ -11,10 +11,10 @@ import { handler as iniHandler } from '../processors/ini';
 
 const options = {
   encoding: 'utf8',
-  schema: yaml.schema.defaultFull,
+  schema: yaml.DEFAULT_FULL_SCHEMA,
 };
 
-const yamlParser = data => yaml.parse(data, options);
+const yamlParser = data => yaml.safeLoad(data, options);
 const TEST_DATA_DIR = path.resolve(__dirname, '../../test/data');
 
 describe('Utils: Transform', () => {
