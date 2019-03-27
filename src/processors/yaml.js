@@ -1,16 +1,17 @@
-import yaml from 'node-yaml';
+import fs from 'fs';
 import { promisify } from 'util';
+import yaml from 'js-yaml';
 
 import extract from '../utils/extract';
 import transform from '../utils/transform';
 
 const options = {
   encoding: 'utf8',
-  schema: yaml.schema.defaultFull,
+  schema: yaml.DEFAULT_FULL_SCHEMA,
 };
-const asyncWrite = promisify(yaml.write);
+const asyncWrite = promisify(fs.writeFile);
 
-const parser = data => yaml.parse(data, options);
+const parser = data => yaml.safeLoad(data, options);
 
 const handler = async (filePath, key) => {
   try {
@@ -25,7 +26,7 @@ const handler = async (filePath, key) => {
 
 const write = async (outputFile, compiled) => {
   try {
-    await asyncWrite(outputFile, compiled, options);
+    await asyncWrite(outputFile, yaml.dump(compiled, options));
 
     return { outputFile };
   } catch (err) {
