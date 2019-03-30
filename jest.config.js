@@ -15,6 +15,5 @@ module.exports = {
   ],
   collectCoverageFrom: [
     'src/**/*.js',
-    'bin/*.js',
   ],
 };
