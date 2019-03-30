@@ -14,34 +14,22 @@ const asyncWrite = promisify(fs.writeFile);
 const parser = data => yaml.safeLoad(data, options);
 
 const handler = async (filePath, key) => {
-  try {
-    const extracted = await extract(filePath, parser);
-    const transformed = await transform(extracted, key, filePath, handler);
+  const extracted = await extract(filePath, parser);
+  const transformed = await transform(extracted, key, filePath, handler);
 
-    return transformed;
-  } catch (err) {
-    throw err;
-  }
+  return transformed;
 };
 
 const write = async (outputFile, compiled) => {
-  try {
-    await asyncWrite(outputFile, yaml.dump(compiled, options));
+  await asyncWrite(outputFile, yaml.dump(compiled, options));
 
-    return { outputFile };
-  } catch (err) {
-    throw err;
-  }
+  return { outputFile };
 };
 
 const dump = compiled => {
-  try {
-    const content = yaml.dump(compiled);
+  const content = yaml.dump(compiled);
 
-    return { content };
-  } catch (err) {
-    throw err;
-  }
+  return { content };
 };
 
 export {

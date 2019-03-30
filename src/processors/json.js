@@ -7,34 +7,22 @@ import transform from '../utils/transform';
 const asyncWrite = promisify(fs.writeFile);
 
 const handler = async (filePath, key) => {
-  try {
-    const extracted = await extract(filePath, JSON.parse);
-    const transformed = await transform(extracted, key, filePath, handler);
+  const extracted = await extract(filePath, JSON.parse);
+  const transformed = await transform(extracted, key, filePath, handler);
 
-    return transformed;
-  } catch (err) {
-    throw err;
-  }
+  return transformed;
 };
 
 const write = async (outputFile, compiled) => {
-  try {
-    await asyncWrite(outputFile, JSON.stringify(compiled), 'utf-8');
+  await asyncWrite(outputFile, JSON.stringify(compiled), 'utf-8');
 
-    return { outputFile };
-  } catch (err) {
-    throw err;
-  }
+  return { outputFile };
 };
 
 const dump = compiled => {
-  try {
-    const content = JSON.stringify(compiled);
+  const content = JSON.stringify(compiled);
 
-    return { content };
-  } catch (err) {
-    throw err;
-  }
+  return { content };
 };
 
 export {
