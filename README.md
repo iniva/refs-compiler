@@ -73,8 +73,12 @@ Properties:
 
 ## Code
 ```javascript
+// CommonJS
 const path = require('path');
-const compiler = require('refs-compiler');
+const { default: compiler } = require('refs-compiler');
+// ES6
+import path from 'path';
+import compiler from 'refs-compiler';
 
 const inputTemplate = path.resolve('/path/to/template.yaml');
 const outputFile = path.resolve(`/path/to/output.yaml`);
