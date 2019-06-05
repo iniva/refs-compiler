@@ -1,6 +1,6 @@
 {
   "name": "refs-compiler",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Compiler for YAML, JSON and INI files using path references",
   "main": "lib/index.js",
   "author": "Tony Di Benedetto <tonyblast@gmail.com>",
